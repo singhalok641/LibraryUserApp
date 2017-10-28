@@ -41,6 +41,7 @@ export default class HomeScreen extends React.Component {
     this.state = {
       active: 'true',
       home:{},
+      books:[]
 
     };
   }
@@ -69,12 +70,35 @@ export default class HomeScreen extends React.Component {
       .catch((error) => {
         console.error(error);
       });
+
+      fetch('http://192.168.43.197/hashhacks/public/user_book',{
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          //'Authorization': 'Bearer ' + token,
+          //'Host': 'byld.tech'
+        }
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          books: responseJson.data,
+          
+        }, function() {
+          //console.log('home:  ' + this.state.home);
+          //console.log('username:' + this.state.username);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render() {
-    var books = [{"name":"Shoe Dog","author":"Phil Knight","returnDate":"28 August 2018","status":"Returned"},
+   /* var books = [{"name":"Shoe Dog","author":"Phil Knight","returnDate":"28 August 2018","status":"Returned"},
                 {"name":"Finite Automata","author":"Phil Knight","returnDate":"28 August 2018","status":"Returned"},
-                {"name":"Shoe Dog","author":"Phil Knight","returnDate":"28 August 2018","status":"Due"}];
+                {"name":"Shoe Dog","author":"Phil Knight","returnDate":"28 August 2018","status":"Due"}];*/
     return (
       <Container style={styles.container}>
         <Content>
@@ -108,8 +132,8 @@ export default class HomeScreen extends React.Component {
           <View>
             <Text style={{padding:16}}> My Books </Text>
             {
-              books.length > 0 ? (
-                <List dataArray={books}
+              this.state.books.length > 0 ? (
+                <List dataArray={this.state.books}
                 renderRow={(books) =>
                   <ListItem>
                     <Image style={styles.thumbnailStyle} source={{ uri: 'http://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781471146701/shoe-dog-9781471146701_hr.jpg' }} />
@@ -117,7 +141,7 @@ export default class HomeScreen extends React.Component {
                       <View style={styles.viewTextStyle}>
                         <Text>{books.name}</Text>
                         {
-                          books.status == 'Returned' ? (
+                          books.status == 'Issued' ? (
                             <Badge style={{ backgroundColor: '#388e3c' }}>
                               <Text style={{ color: 'white' }}>{books.status}</Text>
                             </Badge>
@@ -131,8 +155,8 @@ export default class HomeScreen extends React.Component {
                         }
                       </View>
                       <View style={styles.viewTextStyle}>
-                        <Text note>{books.author}</Text>
-                        <Text note>{books.returnDate}</Text>
+                        <Text note>{this.state.books.author}</Text>
+                        <Text note>{this.state.books.returnDate}</Text>
                       </View>
                     </Body>
                   </ListItem>
