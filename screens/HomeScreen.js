@@ -34,7 +34,42 @@ import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
-  };
+  }
+
+  constructor() {
+    super();
+    this.state = {
+      active: 'true',
+      home:{},
+
+    };
+  }
+
+  componentDidMount = async () => {
+    
+    fetch('http://192.168.43.197/hashhacks/public/home',{
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          //'Authorization': 'Bearer ' + token,
+          //'Host': 'byld.tech'
+        }
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          home: responseJson.data[0],
+          
+        }, function() {
+          //console.log('home:  ' + this.state.home);
+          //console.log('username:' + this.state.username);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
   render() {
     var books = [{"name":"Shoe Dog","author":"Phil Knight","returnDate":"28 August 2018","status":"Returned"},
@@ -45,7 +80,7 @@ export default class HomeScreen extends React.Component {
         <Content>
           <Card style={{backgroundColor:"#0077B5"}}>
             <CardItem style={{ alignItems: 'center',justifyContent: 'center',backgroundColor:'#0077B5' }}>
-              <Text style={{ fontSize:30,color:'#FFFFFF' }}> Hello, Alok !</Text>
+              <Text style={{ fontSize:30,color:'#FFFFFF' }}> Hello, {this.state.home.name} !</Text>
             </CardItem>
             <CardItem style={{alignItems: 'center',justifyContent: 'center',paddingTop:0,backgroundColor:'#0077B5'}}>
                   <View style={{
@@ -59,7 +94,7 @@ export default class HomeScreen extends React.Component {
               <Body style={{ alignItems:"center",justifyContent:"center"}}>
                     <View style={{flexDirection:'column',justifyContent:'center'}}>
                       <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                        <Text style={{ fontSize:35,color:'#FFFFFF' }}> 0 </Text>
+                        <Text style={{ fontSize:35,color:'#FFFFFF' }}> {this.state.home.fine} </Text>
                         <FontAwesomeIcons name="rupee" size={30} color="#FFFFFF" /> 
                       </View>
                       <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
