@@ -4,13 +4,32 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+
+import { 
+  Container, 
+  Header, 
+  Title, 
+  Content, 
+  Footer, 
+  FooterTab,  
+  Left, 
+  Right, 
+  Body,
+  Card,
+  CardItem,
+  Text,
+  Badge,
+  List,
+  ListItem,
+  Thumbnail,
+} from 'native-base';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
+import FontAwesomeIcons from 'react-native-vector-icons/FontAwesome';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -18,14 +37,81 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
+    var books = [{"name":"Shoe Dog","author":"Phil Knight","returnDate":"28 August 2018","status":"Returned"},
+                {"name":"Finite Automata","author":"Phil Knight","returnDate":"28 August 2018","status":"Returned"},
+                {"name":"Shoe Dog","author":"Phil Knight","returnDate":"28 August 2018","status":"Due"}];
     return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}>
-        </ScrollView>
-        
-      </View>
+      <Container style={styles.container}>
+        <Content>
+          <Card style={{backgroundColor:"#0077B5"}}>
+            <CardItem style={{ alignItems: 'center',justifyContent: 'center',backgroundColor:'#0077B5' }}>
+              <Text style={{ fontSize:30,color:'#FFFFFF' }}> Hello, Alok !</Text>
+            </CardItem>
+            <CardItem style={{alignItems: 'center',justifyContent: 'center',paddingTop:0,backgroundColor:'#0077B5'}}>
+                  <View style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderBottomColor: 'white',
+                    borderBottomWidth: 1.0,
+                    width: 250}}/>
+            </CardItem>
+            <CardItem  style={styles.normalText}>
+              <Body style={{ alignItems:"center",justifyContent:"center"}}>
+                    <View style={{flexDirection:'column',justifyContent:'center'}}>
+                      <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                        <Text style={{ fontSize:35,color:'#FFFFFF' }}> 0 </Text>
+                        <FontAwesomeIcons name="rupee" size={30} color="#FFFFFF" /> 
+                      </View>
+                      <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                        <Text style={{ fontSize:20,color:'#FFFFFF' }}>fine so far</Text>
+                      </View>
+                    </View>
+              </Body>
+            </CardItem>
+          </Card>
+
+          <View>
+            <Text style={{padding:16}}> My Books </Text>
+            {
+              books.length > 0 ? (
+                <List dataArray={books}
+                renderRow={(books) =>
+                  <ListItem>
+                    <Image style={styles.thumbnailStyle} source={{ uri: 'http://media.corporate-ir.net/media_files/IROL/17/176060/img/logos/amazon_logo_RGB.jpg' }} />
+                    <Body>
+                      <View style={styles.viewTextStyle}>
+                        <Text>{books.name}</Text>
+                        {
+                          books.status == 'Returned' ? (
+                            <Badge style={{ backgroundColor: '#388e3c' }}>
+                              <Text style={{ color: 'white' }}>{books.status}</Text>
+                            </Badge>
+                            )
+                            :
+                            (
+                            <Badge style={{ backgroundColor: '#ef5350' }}>
+                              <Text style={{ color: 'white' }}>{books.status}</Text>
+                            </Badge>
+                            )
+                        }
+                      </View>
+                      <View style={styles.viewTextStyle}>
+                        <Text note>{books.returnDate}</Text>
+                      </View>
+                    </Body>
+                  </ListItem>
+                }>
+              </List>
+                ):
+              ( <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                  <Text note style={{fontSize: 20}}> No books issued ! </Text>
+                </View>
+                )
+            }
+
+          </View>
+        </Content>
+      </Container>    
     );
   }
 
@@ -68,7 +154,54 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
+  },
+  headerText :{
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor:'#0077b5',
+  },
+  viewTextStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  normalText :{
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor:'#0077b5',
+  },
+  smallText :{
+    fontSize: 12,
+    color: '#FFFFFF'
+  },
+  thumbnailStyle: {
+    resizeMode: 'contain',
+    borderColor: '#ddd',
+    borderWidth: 1,
+    height: 60,
+    width: 60,
+  },
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
+  floatingActionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'black',
+  },
+  notificationButtonIcon: {
+    fontSize: 28,
+    height: 30,
+    color: 'black',
+  },
+  notificationActionButtonView: {
+    height: 50,
+    paddingTop: 20,
+    alignItems:'flex-end',
+    justifyContent: 'space-around',
+    right: 20
   },
   developmentModeText: {
     marginBottom: 20,
