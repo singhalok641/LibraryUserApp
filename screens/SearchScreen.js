@@ -1,6 +1,6 @@
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 import React, { Component } from 'react';
-import { Container, Content, Header, Item, Input, Icon, Button, Text, List, ListItem } from 'native-base';
+import { Container, Content, Header, Item, Input, Icon, Button, List, ListItem } from 'native-base';
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
@@ -60,21 +60,33 @@ export default class LinksScreen extends React.Component {
            transparent
            style={{alignSelf:'center'}} 
            onPress={this.searchbutton} >
-            <Text>Search</Text>
+            <Text style={{fontWeight: 'bold', color: 'blue'}}>Search</Text>
           </Button>
         
         <List>
             <ListItem itemDivider>
-              <Text >Book Name: {this.state.book.book_name}</Text>
+              <Text>
+                <Text style={{fontWeight: 'bold'}}>Book Name: </Text>
+                <Text>{this.state.book.book_name}</Text>
+              </Text>
             </ListItem>                    
             <ListItem >
-              <Text>Author: {this.state.book.book_author}</Text>
+            <Text>
+              <Text style={{fontWeight: 'bold'}}>Author: </Text>
+              <Text>{this.state.book.book_author}</Text>
+            </Text>
             </ListItem>
             <ListItem>
-              <Text>Availability: {this.state.book.availability}</Text>
+              <Text>
+                <Text style={{fontWeight: 'bold'}}>Availability: </Text>
+                <Text>{this.state.book.availability}</Text>
+              </Text>
             </ListItem>
             <ListItem>
-              <Text>Shelf: {this.state.book.availability}</Text>
+              <Text>
+                <Text style={{fontWeight: 'bold'}}>Shelf: </Text>
+                <Text>{this.state.book.shelf_no}</Text>
+              </Text>
             </ListItem>
           </List>
 
