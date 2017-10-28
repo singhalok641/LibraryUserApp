@@ -77,7 +77,7 @@ export default class HomeScreen extends React.Component {
                 <List dataArray={books}
                 renderRow={(books) =>
                   <ListItem>
-                    <Image style={styles.thumbnailStyle} source={{ uri: 'http://media.corporate-ir.net/media_files/IROL/17/176060/img/logos/amazon_logo_RGB.jpg' }} />
+                    <Image style={styles.thumbnailStyle} source={{ uri: 'http://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781471146701/shoe-dog-9781471146701_hr.jpg' }} />
                     <Body>
                       <View style={styles.viewTextStyle}>
                         <Text>{books.name}</Text>
@@ -96,6 +96,7 @@ export default class HomeScreen extends React.Component {
                         }
                       </View>
                       <View style={styles.viewTextStyle}>
+                        <Text note>{books.author}</Text>
                         <Text note>{books.returnDate}</Text>
                       </View>
                     </Body>
